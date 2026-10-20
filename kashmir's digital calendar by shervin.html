@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jammu & Kashmir — Heaven on Earth | 2027 Digital Calendar</title>
+<style>
+  :root {
+    --ink: #19352f;
+    --green: #245b4b;
+    --gold: #d9aa52;
+    --cream: #fbf7ee;
+    --paper: #fffdf8;
+    --muted: #60736b;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  .hero {
+    min-height: 78vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: white;
+    padding: 5rem 1.25rem;
+    background:
+      linear-gradient(rgba(10, 35, 31, .42), rgba(10, 35, 31, .75)),
+      url("https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=2000&q=85")
+      center/cover no-repeat;
+  }
+  .hero-inner { max-width: 900px; }
+  .eyebrow {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,.75);
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font: 700 .75rem/1.4 Arial, sans-serif;
+  }
+  h1 { font-size: clamp(2.4rem, 7vw, 5.5rem); line-height: 1.04; margin: 1.2rem 0; }
+  .hero p { font: 1.12rem/1.8 Arial, sans-serif; max-width: 680px; margin: 0 auto 1.5rem; }
+  .hero a, .nav a {
+    color: inherit; text-decoration: none;
+  }
+  .primary-link {
+    display: inline-block; padding: .8rem 1.2rem; border-radius: 8px;
+    background: var(--gold); color: #192f29 !important;
+    font: 700 .95rem Arial, sans-serif;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; flex-wrap: wrap; gap: .35rem; justify-content: center;
+    padding: .75rem; background: var(--paper); border-bottom: 1px solid #e8dfce;
+    font: .85rem Arial, sans-serif;
+  }
+  .nav a { padding: .35rem .55rem; border-radius: 5px; }
+  .nav a:hover { background: #e9f0e9; }
+  main { max-width: 1200px; margin: auto; padding: 2rem 1rem 4rem; }
+  .intro { max-width: 780px; margin: 1rem auto 2.5rem; text-align: center; }
+  .intro h2, .closing h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: .5rem; }
+  .intro p, .closing p { font: 1rem/1.8 Arial, sans-serif; color: var(--muted); }
+  .months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .month-card {
+    overflow: hidden; background: var(--paper); border-radius: 16px;
+    border: 1px solid #e8dfce; box-shadow: 0 8px 24px rgba(31, 54, 43, .07);
+  }
+  .month-photo { width: 100%; height: 245px; display: block; object-fit: cover; background: #dfe8df; }
+  .month-body { padding: 1.2rem; }
+  .month-top { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; }
+  .month-top h3 { font-size: 1.65rem; margin: 0; }
+  .month-top .year { font: 700 .8rem Arial, sans-serif; color: var(--green); }
+  .theme { margin: .25rem 0 .6rem; color: #956c25; font: 700 .8rem Arial, sans-serif; text-transform: uppercase; letter-spacing: .08em; }
+  .month-description { font: .95rem/1.7 Arial, sans-serif; color: #425b52; min-height: 6.4em; }
+  .calendar { width: 100%; border-collapse: separate; border-spacing: 3px; margin-top: .8rem; font: .83rem Arial, sans-serif; table-layout: fixed; }
+  .calendar th { color: var(--green); font-size: .72rem; padding: .35rem 0; }
+  .calendar td { text-align: center; padding: .42rem 0; border-radius: 5px; background: #f2f4ed; }
+  .calendar td.empty { background: transparent; }
+  .calendar td.weekend { color: #986b27; }
+  .sdg { margin-top: .9rem; padding: .7rem .8rem; background: #edf4eb; border-left: 4px solid var(--green); border-radius: 5px; font: .84rem/1.55 Arial, sans-serif; }
+  .sdg strong { color: var(--green); }
+  .closing {
+    margin-top: 3rem; padding: clamp(1.5rem, 5vw, 3.5rem); border-radius: 18px;
+    color: white; background: linear-gradient(135deg, #173d33, #39745d);
+    text-align: center;
+  }
+  .closing p { color: #eef5ed; max-width: 800px; margin: .75rem auto; }
+  .sdg-badge { display: inline-block; background: #e5b957; color: #173d33; border-radius: 7px; padding: .45rem .75rem; font: 700 .8rem Arial, sans-serif; }
+  footer { text-align: center; padding: 1.5rem; color: var(--muted); font: .8rem Arial, sans-serif; }
+  @media (max-width: 760px) {
+    .months { grid-template-columns: 1fr; }
+    .month-photo { height: 230px; }
+    .month-description { min-height: 0; }
+    .hero { min-height: 68vh; }
+  }
+  @media print {
+    body { background: white; }
+    .nav, .primary-link { display: none; }
+    .hero { min-height: 45vh; print-color-adjust: exact; }
+    .months { grid-template-columns: 1fr 1fr; gap: .6rem; }
+    .month-card { break-inside: avoid; box-shadow: none; }
+    .month-photo { height: 145px; }
+    .month-body { padding: .65rem; }
+    .month-description { min-height: 0; }
+  }
+</style>
+</head>
+<body>
+<header class="hero" id="home">
+  <div class="hero-inner">
+    <span class="eyebrow">2027 Digital Calendar · SDG 8</span>
+    <h1>Jammu &amp; Kashmir<br>Heaven on Earth</h1>
+    <p>Explore breathtaking landscapes, vibrant traditions, local flavours and extraordinary craftsmanship — and discover how responsible tourism supports local livelihoods.</p>
+    <a class="primary-link" href="#calendar">Explore the Calendar ↓</a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Calendar months">
+  <a href="#jan">Jan</a><a href="#feb">Feb</a><a href="#mar">Mar</a><a href="#apr">Apr</a>
+  <a href="#may">May</a><a href="#jun">Jun</a><a href="#jul">Jul</a><a href="#aug">Aug</a>
+  <a href="#sep">Sep</a><a href="#oct">Oct</a><a href="#nov">Nov</a><a href="#dec">Dec</a>
+</nav>
+
+<main id="calendar">
+  <section class="intro">
+    <h2>A Year of Beauty, Culture &amp; Opportunity</h2>
+    <p>Each month celebrates a special place, tradition, craft or flavour of Jammu &amp; Kashmir. The calendar also highlights the people whose work helps keep these traditions alive.</p>
+  </section>
+
+  <section class="months" id="months" aria-label="2027 monthly calendar"></section>
+
+  <section class="closing">
+    <span class="sdg-badge">UNITED NATIONS · SDG 8</span>
+    <h2>Beauty That Builds Livelihoods</h2>
+    <p>Jammu &amp; Kashmir is not only a land of breathtaking landscapes but also a home to talented artisans, farmers, guides, weavers and entrepreneurs. Responsible tourism can create employment, support small businesses and help preserve cultural heritage.</p>
+    <p><strong>Our message:</strong> Travel responsibly. Buy authentic local crafts. Respect nature and culture. Support decent work and sustainable economic growth.</p>
+  </section>
+</main>
+
+<footer>
+  Jammu &amp; Kashmir — Heaven on Earth · Digital Calendar 2027 · Created for SDG 8
+</footer>
+
+<script>
+const months = [
+  {
+    id:"jan", name:"January", theme:"Winter Wonderland · Gulmarg",
+    image:"https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1000&q=80",
+    alt:"Snowy mountain scenery",
+    description:"Snow-covered mountains and winter sports make Gulmarg a beautiful winter destination. Tourism creates work for ski instructors, hotel staff, drivers and local guides.",
+    sdg:"Winter tourism and employment."
+  },
+  {
+    id:"feb", name:"February", theme:"Flavours of Kashmir · Wazwan",
+    image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80",
+    alt:"A selection of traditional food",
+    description:"Wazwan is a celebrated Kashmiri multi-course feast. Food tourism can support chefs, farmers, caterers, restaurant owners and local food suppliers.",
+    sdg:"Local food businesses and livelihoods."
+  },
+  {
+    id:"mar", name:"March", theme:"Blooming Paradise · Srinagar",
+    image:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80",
+    alt:"Colourful spring flowers",
+    description:"Spring flowers bring colour to Kashmir's gardens. Visitors can support gardeners, photographers, taxi drivers, guides and small shopkeepers.",
+    sdg:"Seasonal tourism and local businesses."
+  },
+  {
+    id:"apr", name:"April", theme:"Spring in Paradise · Almond Blossoms",
+    image:"https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80",
+    alt:"Trees covered in spring blossoms",
+    description:"Spring transforms the region with blooming trees and gardens. Tourism supports homestays, transport providers, cafés and handicraft sellers.",
+    sdg:"Sustainable spring tourism."
+  },
+  {
+    id:"may", name:"May", theme:"Valleys of Beauty · Pahalgam",
+    image:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=80",
+    alt:"A green mountain valley and lake",
+    description:"Green meadows, pine forests and river scenery make Pahalgam a favourite destination. Tourism provides income to guides, pony handlers, hotels and transport operators.",
+    sdg:"Rural employment and tourism."
+  },
+  {
+    id:"jun", name:"June", theme:"Life on Dal Lake · Srinagar",
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80",
+    alt:"A peaceful lake surrounded by mountains",
+    description:"Shikaras, houseboats and floating markets reflect a distinctive way of life. Lake tourism supports boat operators, houseboat owners, artisans and vendors.",
+    sdg:"Community-based tourism."
+  },
+  {
+    id:"jul", name:"July", theme:"Artisans of Kashmir · Papier-mâché",
+    image:"https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1000&q=80",
+    alt:"Handmade art and craft materials",
+    description:"Kashmiri papier-mâché is known for decorative patterns and detailed handwork. Buying authentic crafts helps artisans earn a living and pass on traditional skills.",
+    sdg:"Traditional crafts and decent work."
+  },
+  {
+    id:"aug", name:"August", theme:"The Pride of Pashmina · Weaving",
+    image:"https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=1000&q=80",
+    alt:"Textile and fabric craftsmanship",
+    description:"Fine Pashmina shawls represent the skill of Kashmiri craftspeople. Responsible shopping can help preserve weaving traditions and support artisan livelihoods.",
+    sdg:"Skilled work and cultural heritage."
+  },
+  {
+    id:"sep", name:"September", theme:"Golden Saffron · Pampore",
+    image:"https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=1000&q=80",
+    alt:"Purple flowers in a field",
+    description:"Kashmiri saffron is prized for its colour, aroma and flavour. Saffron farming and sales support farmers, harvest workers, traders and small businesses.",
+    sdg:"Agriculture and rural livelihoods."
+  },
+  {
+    id:"oct", name:"October", theme:"Autumn Colours · The Chinar Tree",
+    image:"https://images.unsplash.com/photo-1507371341162-763b5e419408?auto=format&fit=crop&w=1000&q=80",
+    alt:"Golden autumn leaves",
+    description:"Golden and crimson autumn leaves create memorable scenery. Photographers, guides, cafés and accommodation providers can benefit from seasonal visitors.",
+    sdg:"Nature-based tourism."
+  },
+  {
+    id:"nov", name:"November", theme:"Heritage in Every Hand · Walnut Wood",
+    image:"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=80",
+    alt:"Handmade work on a wooden surface",
+    description:"Skilled Kashmiri artisans create intricate walnut wood carvings and decorative objects. Buying locally made products encourages entrepreneurship and protects traditional skills.",
+    sdg:"Small enterprises and skilled employment."
+  },
+  {
+    id:"dec", name:"December", theme:"A Snowy Farewell · Winter in Kashmir",
+    image:"https://images.unsplash.com/photo-1418985991508-e47386d96a71?auto=format&fit=crop&w=1000&q=80",
+    alt:"Snow-covered winter landscape",
+    description:"Snowy landscapes and warm hospitality bring the year to a close. Responsible winter tourism can sustain jobs in hotels, restaurants, transport and local markets.",
+    sdg:"Year-round employment opportunities."
+  }
+];
+
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const container = document.getElementById("months");
+
+function makeCalendar(year, monthIndex) {
+  const firstDay = new Date(year, monthIndex, 1).getDay();
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+  let html = '<table class="calendar" aria-label="' + months[monthIndex].name + ' ' + year + '"><thead><tr>';
+  html += weekdays.map(day => '<th scope="col">' + day + '</th>').join("");
+  html += '</tr></thead><tbody><tr>';
+  for (let i = 0; i < firstDay; i++) html += '<td class="empty"></td>';
+  for (let day = 1; day <= daysInMonth; day++) {
+    const weekday = (firstDay + day - 1) % 7;
+    if (weekday === 0 && day !== 1) html += '</tr><tr>';
+    html += '<td' + (weekday === 0 || weekday === 6 ? ' class="weekend"' : '') + '>' + day + '</td>';
+  }
+  const finalDay = (firstDay + daysInMonth - 1) % 7;
+  for (let i = finalDay + 1; i < 7; i++) html += '<td class="empty"></td>';
+  html += '</tr></tbody></table>';
+  return html;
+}
+
+months.forEach((month, index) => {
+  const article = document.createElement("article");
+  article.className = "month-card";
+  article.id = month.id;
+  article.innerHTML = `
+    <img class="month-photo" src="${month.image}" alt="${month.alt}" loading="lazy">
+    <div class="month-body">
+      <div class="month-top"><h3>${month.name}</h3><span class="year">2027</span></div>
+      <div class="theme">${month.theme}</div>
+      <p class="month-description">${month.description}</p>
+      ${makeCalendar(2027, index)}
+      <div class="sdg"><strong>SDG 8 connection:</strong> ${month.sdg}</div>
+    </div>`;
+  container.appendChild(article);
+});
+</script>
+</body>
+</html>
